@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">OneMay</string>
+    <string name="wel_title">我 的 文 艺 生 活</string>
+    <string name="diary_text">小 记</string>
+    <string name="user_state">未登陆</string>
+    <string name="setting">设置</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="other_setting">其他设置</string>
+    <string name="right_refresh">右拉刷新界面</string>
+</resources>
