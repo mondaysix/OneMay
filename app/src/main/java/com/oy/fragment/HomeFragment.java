@@ -19,7 +19,7 @@ import butterknife.Bind;
 /**
  * Created by Lucky on 2016/10/30.
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
     @Bind(R.id.vp_home)
     public ViewPager vp_home;
     public HomeVPAdapter homeVpAdapter;
@@ -31,6 +31,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void init(View view) {
         homeVpAdapter = new HomeVPAdapter(getChildFragmentManager());
+        vp_home.addOnPageChangeListener(this);
         vp_home.setAdapter(homeVpAdapter);
     }
 
@@ -47,5 +48,33 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         }).downData(Constants.HOME_URL);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Log.d("msg", "当前页面偏移百分比 "+positionOffset);
+        Log.d("msg", "当前页面偏移的像素位置"+positionOffsetPixels);
+    }
+
+    /**
+     * 当前选中的页
+     * @param position
+     */
+    @Override
+    public void onPageSelected(int position) {
+        Log.d("msg", "onPageSelected: "+position);
+
+    }
+
+    /**
+     *滑动首先调用该方法，其次是onPageScrolled
+     * @param state
+     * 三种状态：0：滑动停止的时候
+     *         1：正在滑动
+     *         2：滑动停止
+     */
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        Log.d("msg", "onPageScrollStateChanged: "+state);
     }
 }

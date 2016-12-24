@@ -1,44 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.oy.widget.TypeMoreView.MyScrollView
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:scrollbars="none"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:paddingBottom="5.0dip"
+        android:layout_marginLeft="5.0dip"
+        android:layout_marginTop="5.0dip"
+        android:layout_marginRight="5.0dip"
         android:orientation="vertical"
         android:background="@drawable/shape_content_corner">
         <ImageView
             android:id="@+id/iv_hp_image"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="280dp"
             android:src="@drawable/default_hp_image"
             android:padding="10dp"
             android:scaleType="fitXY"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
             <TextView
                 android:id="@+id/tv_hp_title"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_color_gray"
+                android:textColor="@color/light_gray"
                 android:textSize="12sp" />
             <TextView
                 android:id="@+id/tv_hp_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_color_gray"
+                android:textColor="@color/light_gray"
                 android:textSize="12sp"/>
         </LinearLayout>
             <TextView
@@ -57,52 +61,74 @@
                 android:textColor="@color/text_color_gray"
                 android:textSize="12sp"/>
     </LinearLayout>
-    <LinearLayout
+        <!--小记，喜欢，分享-->
+    <RelativeLayout
+        android:id="@+id/function_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="0.3"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+        android:gravity="center_vertical"
+        android:layout_marginRight="5.0dip">
+        <RelativeLayout
+            android:gravity="center_vertical"
+            android:id="@+id/diary_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/diary_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:contentDescription="@null"
+            android:layout_centerVertical="true"
             android:src="@drawable/selector_diary"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/diary_text"
             android:textSize="12sp"
-            android:textColor="@color/text_color_gray"
-            />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-        <ImageView
+            android:textColor="@color/light_gray"
+            android:layout_toRightOf="@+id/diary_image"
+            android:layout_centerVertical="true" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/laud_layout"
+            android:layout_toLeftOf="@+id/share_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/selector_laud"/>
+            android:layout_centerVertical="true">
+        <ImageView
+            android:id="@+id/laud_image"
+            android:layout_width="40.0dip"
+            android:layout_height="40.0dip"
+            android:src="@drawable/laud"
+            android:scaleType="fitXY"
+            android:layout_centerVertical="true"
+            android:contentDescription="@null"/>
         <TextView
             android:id="@+id/tv_hp_praisenum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@color/text_color_gray"
+            android:textSize="14sp"
+            android:textColor="@color/light_gray"
+            android:layout_toRightOf="@+id/laud_image"
+            android:layout_centerVertical="true"
             />
-        </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/share_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/share_image"/>
-    </LinearLayout>
+            android:src="@drawable/share_image"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"/>
+        </RelativeLayout>
+    </RelativeLayout>
     </LinearLayout>
 
-</com.oy.widget.TypeMoreView.MyScrollView>
+</ScrollView>

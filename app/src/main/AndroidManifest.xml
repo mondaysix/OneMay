@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oy.activity">
+    <!--访问网络权限-->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!--屏幕适配-->
+    <supports-screens android:anyDensity="true"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:largeHeap="true"
+        android:theme="@style/Theme.AppCompat.NoActionBar">
         <!--欢迎页面-->
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".WelcomeActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,7 +22,8 @@
             </intent-filter>
         </activity>
         <!--主页面-->
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <!--个人中心页面-->
         <activity android:name=".IndividualActivity"/>
         <!--阅读头部详情页面-->

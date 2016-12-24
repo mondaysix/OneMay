@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="text_color_gray">#a6a8ab</color>
+    <color name="light_gray">#ff9c9c9c</color>
     <color name="text_color_black">#4f4f4f</color>
     <color name="app_color">#fdfdfe</color>
     <color name="text_color_white">#fff</color>
