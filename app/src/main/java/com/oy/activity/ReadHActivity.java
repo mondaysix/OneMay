@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -23,6 +22,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import immortalz.me.library.TransitionsHeleper;
+import immortalz.me.library.bean.InfoBean;
+import immortalz.me.library.method.ColorShowMethod;
+import immortalz.me.library.method.InflateShowMethod;
 
 /**
  * Created by Lucky on 2016/10/30.
@@ -41,9 +44,7 @@ public class ReadHActivity extends BaseActivity {
     @Bind(R.id.rv_content)
     public RecyclerView rv_content;
     public ReadHCRyAdapter readHCRyAdapter;
-    //头部
-    @Bind(R.id.rd_header_ll)
-    public LinearLayout rd_header_ll;
+
     @Override
     protected int setContentId() {
         return R.layout.activity_read_h;
@@ -53,7 +54,6 @@ public class ReadHActivity extends BaseActivity {
     protected void init() {
         Bundle bundle = getIntent().getExtras();
          readHead = (ReadHead) bundle.getSerializable("ReadHead");
-        rd_header_ll.setBackgroundColor(Color.parseColor(readHead.getBgcolor()));
         scroll_read.setBackgroundColor(Color.parseColor(readHead.getBgcolor()));
         tv_rd_title.setText(readHead.getTitle());
         tv_rd_bottom.setText(readHead.getBottom_text());

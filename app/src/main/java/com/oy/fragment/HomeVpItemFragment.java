@@ -16,6 +16,7 @@ import com.oy.activity.R;
 import com.oy.entity.ContentEntity;
 import com.oy.util.Constants;
 import com.oy.util.JSONUtil;
+import com.oy.util.LruCacheUtil;
 import com.oy.util.RetrofitUtil;
 
 import butterknife.Bind;

@@ -1,5 +1,6 @@
 package com.oy.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,20 +16,22 @@ import de.greenrobot.event.ThreadMode;
  * Created by Administrator on 2016/9/26 0026.
  */
 public abstract class BaseActivity<T> extends AppCompatActivity {
-//    T data;
+    T data;
+    public static BaseActivity context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(setContentId());
+        context = this;
 //        //1---EventBus注册
 //        EventBus.getDefault().register(this);
 
         //注册activity
         ButterKnife.bind(this);
+//        onEventMainThread(data);
         init();
         loadData();
-//        onEventMainThread(data);
         onItemListener();
     }
     /**
@@ -39,6 +42,9 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
     protected  void loadData(){};
     protected  void init(){};
     protected  void onItemListener(){};
+    public static BaseActivity getContext(){
+        return context;
+    }
 //    @Subscribe(threadMode = ThreadMode.MainThread, priority = 100, sticky = true)
 //    public void  onEventMainThread(T data){};
     /**

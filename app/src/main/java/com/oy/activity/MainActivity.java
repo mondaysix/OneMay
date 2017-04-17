@@ -1,7 +1,10 @@
 package com.oy.activity;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -26,6 +29,8 @@ public class MainActivity extends BaseActivity{
     public ImageView iv_individual;
     @Bind(R.id.tv_main_title)
     public TextView tv_main_title;
+    public static Boolean flag = false;
+    public static ImageView iv_ms_album;
     //当前fragment
     public Fragment mContent = new Fragment();
     //四个Fragment
@@ -89,6 +94,26 @@ public class MainActivity extends BaseActivity{
                 transaction.hide(mContent).show(to).commit();
             }
             mContent = to;
+        }
+    }
+    public static class BroadLocalReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean isShow = intent.getBooleanExtra("show",false);
+            flag = isShow;
+            if (isShow){
+                MainActivity.getContext().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        iv_ms_album.setBackgroundResource(R.drawable.animation_play);
+                        AnimationDrawable animDrawable = (AnimationDrawable) iv_ms_album.getDrawable();
+
+                        iv_ms_album.setVisibility(View.VISIBLE);
+                        animDrawable.start();
+                    }
+                });
+            }
         }
     }
 }

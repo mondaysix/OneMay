@@ -9,11 +9,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.oy.activity.R;
 import com.oy.activity.ReadHActivity;
-import com.oy.adapter.ReadHAdapter;
 import com.oy.entity.ReadHead;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
+import immortalz.me.library.TransitionsHeleper;
 
 /**
  * Created by Lucky on 2016/10/30.
@@ -33,9 +34,10 @@ public class ReadHFragment extends BaseFragment {
          readHead = (ReadHead) bundle.getSerializable("head");
         Glide.with(getActivity())
                 .load(readHead.getCover())
-                .placeholder(R.drawable.default_hp_image)
+                .placeholder(R.drawable.default_reading_banner_image)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(iv_music_head);
+
 
     }
     @OnClick(R.id.iv_music_head)

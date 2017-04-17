@@ -28,6 +28,18 @@
         <activity android:name=".IndividualActivity"/>
         <!--阅读头部详情页面-->
         <activity android:name=".ReadHActivity"/>
+        <!--电影详情页面-->
+        <activity android:name=".MovieActivity"/>
+        <!--视频播放页面-->
+        <activity android:name=".VideoActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboard|screenSize|orientation"></activity>
+        <!--天气预报 城市选择页面-->
+        <activity android:name=".CityChooseActivity"/>
+        <!--一周天气列表-->
+        <activity android:name=".WeatherActivity"/>
+        <!--其他设置页面-->
+        <activity android:name=".SettingActivity"/>
     </application>
 
 </manifest>

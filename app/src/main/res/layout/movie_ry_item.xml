@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+    <ImageView
+        android:id="@+id/iv_mv_cover"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/movie_placeholder_3"
+        android:layout_marginBottom="12dp"/>
+    <TextView
+        android:id="@+id/tv_mv_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="25dp"
+        android:textColor="#f00"
+        android:textSize="25sp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/iv_mv_line"
+        android:text="123"/>
+    <ImageView
+        android:id="@+id/iv_mv_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/score_line"
+        android:layout_alignBottom="@+id/iv_mv_cover"
+        android:padding="5dp"
+        android:layout_alignParentRight="true"
+        />
+</RelativeLayout>

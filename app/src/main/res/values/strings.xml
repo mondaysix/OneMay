@@ -1,10 +1,24 @@
 <resources>
-    <string name="app_name">OneALL</string>
-    <string name="wel_title">我 的 文 艺 生 活</string>
+    <string name="app_name">一读</string>
     <string name="diary_text">小 记</string>
     <string name="user_state">未登陆</string>
     <string name="setting">设置</string>
     <string name="night_mode">夜间模式</string>
     <string name="other_setting">其他设置</string>
     <string name="right_refresh">右拉刷新界面</string>
+    <string name="left_refresh">左滑动进入往期列表</string>
+    <string name="music_story">音乐故事</string>
+    <string name="comment_list">评论列表</string>
+    <string name="movie_score">评分</string>
+    <string name="movie_story">电影故事</string>
+    <string  name="movie_tab">一个电影表</string>
+    <string name="movie_photo">剧照</string>
+    <string name="movie_info">影片信息</string>
+    <string name="movie_comment">评论列表</string>
+    <string name="video_dialog">您当前的网络不是wifi状态,在线播放将消耗您的网络流量</string>
+    <string name="video_continue">继续播放</string>
+    <string name="video_cancle">取消</string>
+    <item type="id" name="cityname"></item>
+    <item type="id" name="movie_tag"></item>
+    <item type="id" name="movie_obj"></item>
 </resources>

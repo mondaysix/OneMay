@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OneMay.iml" filepath="$PROJECT_DIR$/OneMay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vitamio/vitamio.iml" filepath="$PROJECT_DIR$/vitamio/vitamio.iml" />
       <module fileurl="file://$PROJECT_DIR$/yanglibrary/yanglibrary.iml" filepath="$PROJECT_DIR$/yanglibrary/yanglibrary.iml" />
     </modules>
   </component>

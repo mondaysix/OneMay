@@ -1,1 +1,1 @@
-include ':app', ':yanglibrary'
+include ':app', ':yanglibrary', ':vitamio'

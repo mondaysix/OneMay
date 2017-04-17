@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@drawable/disc_play_1" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_2" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_3" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_4" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_5" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_6" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_7" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_8" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_9" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_10" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_11" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_12" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_13" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_14" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_15" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_16" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_17" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_18" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_19" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_20" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_21" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_22" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_23" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_24" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_25" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_26" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_27" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_28" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_29" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_30" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_31" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_32" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_33" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_34" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_35" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_36" android:duration="40"/>
+    <item android:drawable="@drawable/disc_play_37" android:duration="40"/>
+
+
+
+
+
+</animation-list>

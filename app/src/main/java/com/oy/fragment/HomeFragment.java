@@ -2,7 +2,9 @@ package com.oy.fragment;
 
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.oy.activity.R;
 import com.oy.adapter.HomeVPAdapter;
@@ -12,6 +14,7 @@ import com.oy.util.RetrofitUtil;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -19,10 +22,11 @@ import butterknife.Bind;
 /**
  * Created by Lucky on 2016/10/30.
  */
-public class HomeFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class HomeFragment extends BaseFragment implements ViewPager.OnPageChangeListener, View.OnTouchListener {
     @Bind(R.id.vp_home)
     public ViewPager vp_home;
     public HomeVPAdapter homeVpAdapter;
+    boolean isRefresh = false;
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
@@ -31,8 +35,9 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
     @Override
     public void init(View view) {
         homeVpAdapter = new HomeVPAdapter(getChildFragmentManager());
-        vp_home.addOnPageChangeListener(this);
         vp_home.setAdapter(homeVpAdapter);
+        vp_home.addOnPageChangeListener(this);
+        vp_home.setOnTouchListener(this);
     }
 
     @Override
@@ -44,37 +49,41 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
                 if (json!=null){
                     //解析id个数
                     List<Integer> idList = JSONUtil.getHomePageNum(json);
+                    //添加头部、尾部fragment
+                    idList.add(0,0);
+                    idList.add(idList.size(),1);
                     homeVpAdapter.setIds(idList);
+                    vp_home.setCurrentItem(1);
                 }
             }
         }).downData(Constants.HOME_URL);
     }
 
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        Log.d("msg", "当前页面偏移百分比 "+positionOffset);
-        Log.d("msg", "当前页面偏移的像素位置"+positionOffsetPixels);
+
     }
 
-    /**
-     * 当前选中的页
-     * @param position
-     */
     @Override
     public void onPageSelected(int position) {
-        Log.d("msg", "onPageSelected: "+position);
-
+        Toast toast = Toast.makeText(getContext(), "正在刷新", Toast.LENGTH_SHORT);
+        if (position==1&& !isRefresh){
+            toast.show();
+            isRefresh = true;
+        }
+        else {
+            isRefresh = false;
+        }
     }
 
-    /**
-     *滑动首先调用该方法，其次是onPageScrolled
-     * @param state
-     * 三种状态：0：滑动停止的时候
-     *         1：正在滑动
-     *         2：滑动停止
-     */
     @Override
     public void onPageScrollStateChanged(int state) {
-        Log.d("msg", "onPageScrollStateChanged: "+state);
+        //开始滑动---1 手指离开的时候是2，停留在当前页的时候是0
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return false;
     }
 }
