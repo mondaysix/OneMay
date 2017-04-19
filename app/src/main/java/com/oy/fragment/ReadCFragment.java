@@ -52,17 +52,17 @@ public class ReadCFragment extends BaseFragment {
         serial = (ReadContent.Serial) bundle.getSerializable("serical");
         question = (ReadContent.Question) bundle.getSerializable("question");
         //EssayContent
-        tv_rd_ct_es_title.setText(essayContent.getHp_title());
-        tv_rd_ct_es_name.setText(essayContent.getAuthor().get(0).getUser_name());
-        tv_rd_ct_es_word.setText(essayContent.getGuide_word());
+        tv_rd_ct_es_title.setText(essayContent.getContentTitle());
+        tv_rd_ct_es_name.setText(essayContent.getAuthorName());
+        tv_rd_ct_es_word.setText(essayContent.getGuideWord());
         //Serial
-        tv_rd_ct_se_title.setText(serial.getTitle());
-        tv_rd_ct_se_name.setText(serial.getAuthor().getUser_name());
-        tv_rd_ct_se_word.setText(serial.getExcerpt());
+        tv_rd_ct_se_title.setText(serial.getContentTitle());
+        tv_rd_ct_se_name.setText(serial.getAuthorName());
+        tv_rd_ct_se_word.setText(serial.getGuideWord());
         //Question
-        tv_rd_ct_qu_title.setText(question.getQuestion_title());
-        tv_rd_ct_qu_name.setText(question.getAnswer_title());
-        tv_rd_ct_qu_word.setText(question.getAnswer_content());
+        tv_rd_ct_qu_title.setText(question.getContentTitle());
+        tv_rd_ct_qu_name.setText(question.getAuthorName());
+        tv_rd_ct_qu_word.setText(question.getGuideWord());
     }
 
     @Override

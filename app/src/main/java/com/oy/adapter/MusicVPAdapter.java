@@ -22,7 +22,10 @@ public class MusicVPAdapter extends FragmentPagerAdapter {
 
     }
     public void setIntegers( List<Integer> integers){
-        this.integers = integers;
+        if (integers!=null){
+            this.integers = integers;
+        }
+
         this.notifyDataSetChanged();
     }
     @Override

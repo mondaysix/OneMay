@@ -43,20 +43,20 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
     @Override
     public void loadDatas() {
         //下载首页viewpager个数
-        new RetrofitUtil().init(Constants.BASE_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
+        new RetrofitUtil().init(Constants.DOM_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
             @Override
             public void getJson(String json) {
+                Log.d("msg1", "home count--- "+json);
                 if (json!=null){
                     //解析id个数
                     List<Integer> idList = JSONUtil.getHomePageNum(json);
-                    //添加头部、尾部fragment
-                    idList.add(0,0);
-                    idList.add(idList.size(),1);
+                    Log.d("msg", "getJson: "+idList);
+
                     homeVpAdapter.setIds(idList);
-                    vp_home.setCurrentItem(1);
+                    vp_home.setCurrentItem(0);
                 }
             }
-        }).downData(Constants.HOME_URL);
+        }).downData(Constants.HOME_URL,null,1);
     }
 
 
@@ -67,14 +67,7 @@ public class HomeFragment extends BaseFragment implements ViewPager.OnPageChange
 
     @Override
     public void onPageSelected(int position) {
-        Toast toast = Toast.makeText(getContext(), "正在刷新", Toast.LENGTH_SHORT);
-        if (position==1&& !isRefresh){
-            toast.show();
-            isRefresh = true;
-        }
-        else {
-            isRefresh = false;
-        }
+
     }
 
     @Override

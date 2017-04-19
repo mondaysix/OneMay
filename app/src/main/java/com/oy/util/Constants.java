@@ -5,6 +5,12 @@ package com.oy.util;
  */
 public interface Constants {
      String BASE_URL="http://v3.wufazhuce.com:8000/api/";
+    //new url
+    String DOM_URL = "http://192.168.43.172:1883/";
+    //192.168.43.172----mm
+    //192.168.6.106-----xiaomm
+    //img url
+    String IMG_URL = DOM_URL+"uploads/";
     //-----------------首页
     //首页id
      String HOME_URL="hp/idlist/0?version=3.5.0&platform=android";
@@ -13,8 +19,10 @@ public interface Constants {
     //------------------阅读页
     //---头部viewpager
     String READ_HEAD="reading/carousel/?version=3.5.0&platform=android";
+    String READ_HEAD2="reading/head/?version=3.5.0&platform=android";
     //---头部图片详情页
     String READ_HEAD_DETAIL="reading/carousel/%d?version=3.5.0&platform=android";
+    String READ_HEAD_DETAIL2="reading/headDetail/%d?version=3.5.0&platform=android";
     //内容详情页
     String READ_CONTENT="reading/index/?version=3.5.0&platform=android";
     //------------------音乐页
@@ -37,4 +45,11 @@ public interface Constants {
     String BASE_Weather_URL = "http://v.juhe.cn/weather/";
     String CITY_WETHER = "index?format=2&cityname=%s&key="+KEY;
     String CITYS="citys?key="+KEY;
+    //------------登录注册---
+
+    int[] QOS_VALUES = {0,1};
+    String[] TOPICS = {
+            "user/getPic",
+            "userpic"
+    };
 }

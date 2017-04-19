@@ -42,6 +42,6 @@ public class MusicFragment extends BaseFragment {
                     musicAdapter.setIntegers(integers);
                 }
             }
-        }).downData(Constants.MUSIC_URL);
+        }).downData(Constants.MUSIC_URL,null,1);
     }
 }

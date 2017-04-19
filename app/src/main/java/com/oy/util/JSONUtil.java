@@ -49,13 +49,13 @@ public class JSONUtil {
             JSONObject jsonObject = new JSONObject(json);
             jsonObject = jsonObject.getJSONObject("data");
             contentEntity = new ContentEntity(
-                    jsonObject.getString("hpcontent_id"),
+                    jsonObject.getInt("hpcontent_id"),
                     jsonObject.getString("hp_title"),
                     jsonObject.getString("author_id"),
                     jsonObject.getString("hp_img_url"),
                     jsonObject.getString("hp_author"),
                     jsonObject.getString("hp_content"),
-                    jsonObject.getString("hp_makettime"),
+                    jsonObject.getString("hp_maketime"),
                     jsonObject.getString("last_update_date"),
                     jsonObject.getInt("praisenum"),
                     jsonObject.getInt("sharenum"),
@@ -97,15 +97,15 @@ public class JSONUtil {
 
             JSONArray ja1 = jsonObject.getJSONArray("essay");
             TypeToken<List<ReadContent.EssayContent>> tt1 = new TypeToken<List<ReadContent.EssayContent>>(){};
-            readContent.setEssayContents((List<ReadContent.EssayContent>) new Gson().fromJson(ja1.toString(),tt1.getType()));
+            readContent.setEssay((List<ReadContent.EssayContent>) new Gson().fromJson(ja1.toString(),tt1.getType()));
 
             JSONArray ja2 =jsonObject.getJSONArray("serial");
             TypeToken<List<ReadContent.Serial>> tt2 = new TypeToken<List<ReadContent.Serial>>(){};
-            readContent.setSerials((List<ReadContent.Serial>) new Gson().fromJson(ja2.toString(),tt2.getType()));
+            readContent.setSerial((List<ReadContent.Serial>) new Gson().fromJson(ja2.toString(),tt2.getType()));
 
             JSONArray ja3 =jsonObject.getJSONArray("question");
             TypeToken<List<ReadContent.Question>> tt3 = new TypeToken<List<ReadContent.Question>>(){};
-            readContent.setQuestions((List<ReadContent.Question>) new Gson().fromJson(ja3.toString(),tt3.getType()));
+            readContent.setQuestion((List<ReadContent.Question>) new Gson().fromJson(ja3.toString(),tt3.getType()));
             return readContent;
         } catch (JSONException e) {
             e.printStackTrace();

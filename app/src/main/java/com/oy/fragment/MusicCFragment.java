@@ -190,7 +190,7 @@ public class MusicCFragment extends BaseFragment implements MediaPlayer.OnComple
                     ll_ms.setVisibility(View.VISIBLE);
                 }
             }
-        }).downData(newUrl);
+        }).downData(newUrl,null,1);
         //评论详情下载
         String comUrl = String.format(Constants.MUSIC_COMMENT,music_id);
 
@@ -202,7 +202,7 @@ public class MusicCFragment extends BaseFragment implements MediaPlayer.OnComple
                     cRyAdapter.setCommentList(commentList);
                 }
             }
-        }).downData(comUrl);
+        }).downData(comUrl,null,1);
     }
     @OnClick({R.id.iv_ms_story,R.id.iv_ms_lyric,
             R.id.iv_ms_about,R.id.iv_ms_play})

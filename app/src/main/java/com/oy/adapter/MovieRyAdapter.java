@@ -36,7 +36,10 @@ public class MovieRyAdapter extends RecyclerView.Adapter<MyCustomRecyclerViewHol
         this.onItemClickListener = onItemClickListener;
     }
     public void setMovieLists(List<MovieList> movieLists){
-        this.movieLists = movieLists;
+        if (movieLists!=null){
+            this.movieLists = movieLists;
+        }
+
         this.notifyDataSetChanged();
     }
     @Override

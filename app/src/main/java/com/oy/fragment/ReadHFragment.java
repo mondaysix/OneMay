@@ -10,6 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.oy.activity.R;
 import com.oy.activity.ReadHActivity;
 import com.oy.entity.ReadHead;
+import com.oy.util.Constants;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -32,8 +33,9 @@ public class ReadHFragment extends BaseFragment {
     @Override
     protected void getBundletDatas(Bundle bundle) {
          readHead = (ReadHead) bundle.getSerializable("head");
+        String cover_url = Constants.IMG_URL+readHead.getCover();
         Glide.with(getActivity())
-                .load(readHead.getCover())
+                .load(cover_url)
                 .placeholder(R.drawable.default_reading_banner_image)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(iv_music_head);

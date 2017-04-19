@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.oy.entity.ReadContent;
 import com.oy.fragment.ReadCFragment;
@@ -25,7 +26,7 @@ public class ReadCAdapter extends FragmentPagerAdapter {
     }
     public void setReadContent(ReadContent readContent){
         this.readContent = readContent;
-        essayContents = readContent.getEssayContents();
+        essayContents = readContent.getEssay();
         this.notifyDataSetChanged();
     }
 
@@ -33,9 +34,10 @@ public class ReadCAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         ReadCFragment readCFragment = new ReadCFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("essay", (Serializable) readContent.getEssayContents().get(position));
-        bundle.putSerializable("serical", (Serializable) readContent.getSerials().get(position));
-        bundle.putSerializable("question",readContent.getQuestions().get(position));
+        Log.d("msg1", "essay"+readContent.getEssay().size()+"--serial--"+readContent.getSerial().size()+"--question--"+readContent.getQuestion().size());
+        bundle.putSerializable("essay", (Serializable) readContent.getEssay().get(position));
+        bundle.putSerializable("serical", (Serializable) readContent.getSerial().get(position));
+        bundle.putSerializable("question",readContent.getQuestion().get(position));
         readCFragment.setArguments(bundle);
         return readCFragment;
     }

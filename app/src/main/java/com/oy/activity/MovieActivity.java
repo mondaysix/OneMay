@@ -149,7 +149,7 @@ public class MovieActivity extends BaseActivity {
                             expand_text_view.setText(spanned);
                         }
                     }
-                }).downData(newUrl);
+                }).downData(newUrl,null,1);
         //电影表--
         new RetrofitUtil().init(Constants.BASE_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
             @Override
@@ -181,7 +181,7 @@ public class MovieActivity extends BaseActivity {
                 //影片信息
                 tv_mc_info.setText(movieTab.getInfo());
             }
-        }).downData(movie_tab);
+        }).downData(movie_tab,null,1);
         //评论区
         new RetrofitUtil().init(Constants.BASE_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
             @Override
@@ -189,7 +189,7 @@ public class MovieActivity extends BaseActivity {
                 List<MovieComment> movieComment = JSONUtil.getMovieComments(json);
                 movieComAdapter.setMovieComments(movieComment);
             }
-        }).downData(commentUrl);
+        }).downData(commentUrl,null,1);
     }
 
     @OnClick({R.id.iv_mv_back,R.id.iv_mv_keyword,R.id.iv_mv_photo,R.id.iv_mv_info,R.id.iv_mv_cover})

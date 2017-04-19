@@ -83,6 +83,6 @@ public class WeatherActivity extends BaseActivity {
                     weatherAdapter.setFutureBeen(weatherEntity.getResult().getFuture());
                 }
             }
-        }).downData(newUrl);
+        }).downData(newUrl,null,1);
     }
 }

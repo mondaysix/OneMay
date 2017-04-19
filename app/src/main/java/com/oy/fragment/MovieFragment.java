@@ -66,6 +66,6 @@ public class MovieFragment extends BaseFragment {
                     movieRyAdapter.setMovieLists(movieLists);
                 }
             }
-        }).downData(Constants.MOVIE_HOME);
+        }).downData(Constants.MOVIE_HOME,null,1);
     }
 }

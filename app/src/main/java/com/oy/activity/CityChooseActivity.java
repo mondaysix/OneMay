@@ -68,7 +68,7 @@ public class CityChooseActivity extends BaseActivity {
                     }
                     cityAdapter.setCityEntities(cityEntities);
                 }
-            }).downData(Constants.CITYS);
+            }).downData(Constants.CITYS,null,1);
         }
         else {
             cityAdapter.setCityEntities(cityFromDatabase);

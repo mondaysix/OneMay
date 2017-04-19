@@ -48,7 +48,7 @@ public class ReadFragment extends BaseFragment {
     @Override
     public void loadDatas() {
         //下载头部数据
-        new RetrofitUtil().init(Constants.BASE_URL)
+        new RetrofitUtil().init(Constants.DOM_URL)
                 .setListener(new RetrofitUtil.OnGetJsonListener() {
                     @Override
                     public void getJson(String json) {
@@ -57,9 +57,9 @@ public class ReadFragment extends BaseFragment {
                             readHAdapter.setReadHData(readHeads);
                         }
                     }
-                }).downData(Constants.READ_HEAD);
+                }).downData(Constants.READ_HEAD2,null,1);
         //下载内容页
-        new RetrofitUtil().init(Constants.BASE_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
+        new RetrofitUtil().init(Constants.DOM_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
             @Override
             public void getJson(String json) {
                 if (json!=null){
@@ -67,6 +67,6 @@ public class ReadFragment extends BaseFragment {
                     readCAdapter.setReadContent(readContent);
                 }
             }
-        }).downData(Constants.READ_CONTENT);
+        }).downData(Constants.READ_CONTENT,null,1);
     }
 }

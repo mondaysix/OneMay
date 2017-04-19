@@ -56,8 +56,9 @@ public class ReadHActivity extends BaseActivity {
          readHead = (ReadHead) bundle.getSerializable("ReadHead");
         scroll_read.setBackgroundColor(Color.parseColor(readHead.getBgcolor()));
         tv_rd_title.setText(readHead.getTitle());
-        tv_rd_bottom.setText(readHead.getBottom_text());
-        Glide.with(this).load(readHead.getCover())
+        tv_rd_bottom.setText(readHead.getTextDes());
+        String cover_url = Constants.IMG_URL+readHead.getCover();
+        Glide.with(this).load(cover_url)
                 .placeholder(R.drawable.default_reading_banner_image)
                 .into(iv_rd_bottom);
         //初始化recycleview
@@ -67,8 +68,9 @@ public class ReadHActivity extends BaseActivity {
     }
     @Override
     protected void loadData() {
-        String detailURL = String.format(Constants.READ_HEAD_DETAIL,Integer.valueOf(readHead.getId()));
-        new RetrofitUtil().init(Constants.BASE_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
+        String detailURL = String.format(Constants.READ_HEAD_DETAIL2,Integer.valueOf(readHead.getId()));
+
+        new RetrofitUtil().init(Constants.DOM_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
             @Override
             public void getJson(String json) {
                 //获取详情页内容
@@ -77,7 +79,7 @@ public class ReadHActivity extends BaseActivity {
                     readHCRyAdapter.setReadHeadDts(headDtList);
                 }
             }
-        }).downData(detailURL);
+        }).downData(detailURL,null,1);
     }
     @OnClick(R.id.iv_rd_close)
     public void onClickListener(View view){

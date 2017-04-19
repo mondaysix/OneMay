@@ -19,6 +19,8 @@ import com.oy.util.JSONUtil;
 import com.oy.util.LruCacheUtil;
 import com.oy.util.RetrofitUtil;
 
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -54,14 +56,17 @@ public class HomeVpItemFragment extends BaseFragment {
     protected void getBundletDatas(Bundle bundle) {
         int id = bundle.getInt("id");
         final String content_url = String.format(Constants.HOME_CONTENT_URL,id);
+        Log.d("msg1", content_url);
         //下载content
-        new RetrofitUtil().init(Constants.BASE_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
+        new RetrofitUtil().init(Constants.DOM_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
             @Override
             public void getJson(String json) {
+                Log.d("msg1", json);
                 if (json!=null){
                     ContentEntity contentEntity = JSONUtil.getContent(json);
                     //文章图片
-                    Glide.with(getActivity()).load(contentEntity.getHp_img_url())
+                    String img_url = Constants.IMG_URL+contentEntity.getHp_img_url();
+                    Glide.with(getActivity()).load(img_url)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.default_hp_image)
                             .into(iv_hp_image);
@@ -72,13 +77,15 @@ public class HomeVpItemFragment extends BaseFragment {
                     //内容
                     tv_hp_content.setText(contentEntity.getHp_content());
                     //创作时间
-                    tv_hp_maketime.setText(contentEntity.getHp_makettime());
+
+
+                    tv_hp_maketime.setText(contentEntity.getHp_maketime());
                     //点赞数
                     tv_hp_praisenum.setText(contentEntity.getPraisenum()+"");
 
                 }
             }
-        }).downData(content_url);
+        }).downData(content_url,null,1);
         //设置缩放参数
         //获得屏幕的宽高
         DisplayMetrics displayMetrics = new DisplayMetrics();
