@@ -34,7 +34,7 @@ public class MusicFragment extends BaseFragment {
 
     @Override
     public void loadDatas() {
-        new RetrofitUtil().init(Constants.BASE_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
+        new RetrofitUtil().init(Constants.DOM_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
             @Override
             public void getJson(String json) {
                 if (json!=null){

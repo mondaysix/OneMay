@@ -8,18 +8,17 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by Administrator on 2016/9/27 0027.
  */
 public class MySqliteOpenHelper extends SQLiteOpenHelper {
-    private String tableName;
-    private String sql;
 
-    public MySqliteOpenHelper(Context context, String name, String tableName,String sql) {
-        super(context, name, null, 1);
-        this.tableName = tableName;
-        this.sql = sql;
+
+    public MySqliteOpenHelper(Context context) {
+        super(context, CommonDB.DB_NAME, null, CommonDB.DB_VERSION);//参数1：上下文 参数2：数据库名称 参数3：cursorFactory 参数4：数据库版本
     }
 
+    //第一次得到sqlitedatabase对象调用一次
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(sql);
+        db.execSQL(CommonDB.create_table_user);
+        db.execSQL(CommonDB.create_table_city);
     }
 
     @Override

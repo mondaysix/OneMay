@@ -2,6 +2,7 @@ package com.oy.activity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -26,10 +27,10 @@ public class SettingActivity extends BaseActivity {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
-    @OnClick(R.id.ll)
+    @OnClick(R.id.tv_bluth)
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.ll:
+            case R.id.tv_bluth:
                 BlueDialog blueDialog = new BlueDialog(this, new BlueDialog.OnClickListener() {
                     @Override
                     public void onComfirm(View view) {
@@ -46,5 +47,14 @@ public class SettingActivity extends BaseActivity {
                 blueDialog.show();
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            startActivity(new Intent(this,IndividualActivity.class));
+            SettingActivity.this.finish();
+        }
+        return false;
     }
 }

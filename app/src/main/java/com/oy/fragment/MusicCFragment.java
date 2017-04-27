@@ -1,27 +1,27 @@
 package com.oy.fragment;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
+
+
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
+
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.ViewPager;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
+
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.oy.activity.MainActivity;
@@ -39,12 +39,13 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import de.greenrobot.event.Subscribe;
+
+
 
 /**
  * Created by Lucky on 2016/10/31.
  */
-public class MusicCFragment extends BaseFragment implements MediaPlayer.OnCompletionListener {
+public class MusicCFragment extends BaseFragment{
     @Bind(R.id.iv_music_anim)
     public ImageView iv_music_anim;
     @Bind(R.id.ll_ms)
@@ -107,7 +108,7 @@ public class MusicCFragment extends BaseFragment implements MediaPlayer.OnComple
     public MainActivity.BroadLocalReceiver broadReceiver;
     public IntentFilter intentFilter;
     //播放音乐
-    public MediaPlayer mediaPlayer = new MediaPlayer();
+    public MediaPlayer mediaPlayer ;
     public boolean isPause  = false;
     @Bind(R.id.iv_ms_play)
     public ImageView iv_ms_play;
@@ -118,6 +119,7 @@ public class MusicCFragment extends BaseFragment implements MediaPlayer.OnComple
 
     @Override
     public void init(View view) {
+
         broadReceiver = new MainActivity.BroadLocalReceiver();
         //广播过滤
         intentFilter = new IntentFilter("com.action.play.album");
@@ -126,7 +128,7 @@ public class MusicCFragment extends BaseFragment implements MediaPlayer.OnComple
         //注册本地广播监听器
         localBroadManager.registerReceiver(broadReceiver,intentFilter);
 
-        //正在加载动画
+//        //正在加载动画
         iv_music_anim.setImageResource(R.drawable.animation_default);
         AnimationDrawable  animDrawable = (AnimationDrawable) iv_music_anim.getDrawable();
         animDrawable.start();
@@ -134,26 +136,56 @@ public class MusicCFragment extends BaseFragment implements MediaPlayer.OnComple
         cRyAdapter = new MusicCRyAdapter(getActivity());
         rv_ms_comment.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_ms_comment.setAdapter(cRyAdapter);
-        mediaPlayer = MediaPlayer.create(getActivity(),R.raw.music1);
+        mediaPlayer = new MediaPlayer();
+        //mediaPlayer = MediaPlayer.create(getActivity(),R.raw.music1);
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Toast.makeText(MusicCFragment.context,"播放完成",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     @Override
     protected void getBundletDatas(Bundle bundle) {
         final int music_id = bundle.getInt("m_id");
         String newUrl = String.format(Constants.MUSIC_DETAIL,music_id);
-        new RetrofitUtil().init(Constants.BASE_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
+        new RetrofitUtil().init(Constants.DOM_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
             @Override
             public void getJson(String json) {
                 if (json!=null){
                     ll_ms.setVisibility(View.GONE);
-                    MusicContent musicCon = JSONUtil.getMusicCon(json);
-                    //封面
-                    Glide.with(getActivity())
-                            .load(musicCon.getCover())
-                            .placeholder(R.drawable.default_hp_image)
-                            .into(iv_ms_cover);
+
+                    MusicContent musicCon = new MusicContent();
+                    musicCon = JSONUtil.getMusicCon(json);
+                    //歌曲id
+                    String song_url = musicCon.getMucic_id();
+                    try {
+                        mediaPlayer.setDataSource(Constants.SONG_URL+song_url);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mediaPlayer.prepareAsync();
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Log.d("msg", "getJson: "+Constants.SONG_URL+song_url);
+                    if(musicCon.getCover()!=null){
+                        String cover_url = Constants.IMG_URL +musicCon.getCover();
+                        //封面
+                        Glide.with(getActivity())
+                                .load(cover_url)
+                                .placeholder(R.drawable.default_hp_image)
+                                .into(iv_ms_cover);
+                    }
+
+
                     //歌手简单介绍
+                    String singer_url = Constants.IMG_URL + musicCon.getAuthor().getWeb_url();
                     Glide.with(getActivity())
-                            .load(musicCon.getAuthor().getWeb_url())
+                            .load(singer_url)
                             .placeholder(R.drawable.head)
                             .transform(new CircleTransform(getActivity()))
                             .into(iv_ms_singer_head);
@@ -161,28 +193,29 @@ public class MusicCFragment extends BaseFragment implements MediaPlayer.OnComple
                     tv_ms_singer_desc.setText(musicCon.getAuthor().getDesc());
                     tv_ms_singer_title.setText(musicCon.getTitle());
                     tv_ms_singer_time.setText(musicCon.getMaketime());
-                    //-------story内容
+
                     //标题
+
                     tv_ms_title.setText(musicCon.getStory_title());
                     //作者
-                    tv_ms_author.setText(musicCon.getStory_author().getUser_name());
+                    tv_ms_author.setText(musicCon.getUser_name());
                     //内容
-                    CharSequence charSequence=Html.fromHtml(musicCon.getStory());
+                    CharSequence charSequence=Html.fromHtml(musicCon.getStory().replace("\\n","\n").replace("\\r","\r"));
                     tv_msg_content.setText(charSequence);
                     //该语句在设置后必加，不然没有任何效果  
                     tv_msg_content.setMovementMethod(LinkMovementMethod.getInstance());
                     //----------lyric
                     //内容
-                    tv_ms_ly_content.setText(musicCon.getLyric());
+                    tv_ms_ly_content.setText(musicCon.getLyric().replace("\\n","\n").replace("\\r","\r"));
                     //---------about
                     //内容
-                    tv_ms_ab_content.setText(musicCon.getInfo());
+                    tv_ms_ab_content.setText(musicCon.getInfo().replace("\\n","\n").replace("\\r","\r"));
                     //责任编辑
-                    tv_ms_charge_edt.setText(musicCon.getCharge_edt());
+                    tv_ms_charge_edt.setText(musicCon.getCharge_edit());
                     //点赞、评论
-                    tv_ms_praisenum.setText(musicCon.getPraisenum());
-                    tv_ms_commentnum.setText(musicCon.getCommentnum());
-                    tv_ms_sharenum.setText(musicCon.getSharenum());
+                    tv_ms_praisenum.setText(""+musicCon.getPraisenum());
+                    tv_ms_commentnum.setText(""+musicCon.getCommentnum());
+                    tv_ms_sharenum.setText(""+musicCon.getSharenum());
 
 
                 }
@@ -241,19 +274,24 @@ public class MusicCFragment extends BaseFragment implements MediaPlayer.OnComple
             case R.id.iv_ms_play:
                 //开始播放音乐
                 Intent intent = new Intent("com.action.play.album");
-                intent.putExtra("show",true);
-                localBroadManager.sendBroadcast(intent);
-                mediaPlayer.setOnCompletionListener(this);
+
+
                 if (isPause && mediaPlayer.isPlaying()){
+
                     iv_ms_play.setImageResource(R.drawable.play);
                     mediaPlayer.pause();
                     isPause = false;
                 }
                 else {
+
                     mediaPlayer.start();
                     iv_ms_play.setImageResource(R.drawable.player_pause);
                     isPause = true;
+
+
                 }
+                intent.putExtra("show",isPause);
+                localBroadManager.sendBroadcast(intent);
                 break;
         }
     }
@@ -263,11 +301,10 @@ public class MusicCFragment extends BaseFragment implements MediaPlayer.OnComple
         super.onDestroy();
         if (mediaPlayer!=null){
             mediaPlayer.release();
+            mediaPlayer = null;
         }
         localBroadManager.unregisterReceiver(broadReceiver);
     }
 
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-    }
+
 }

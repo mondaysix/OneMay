@@ -46,12 +46,13 @@ public class MailLoginActivity extends BaseActivity {
 
         switch (view.getId()){
             case R.id.iv_back:
-
+                startActivity(new Intent(this,loginWayActivity.class));
+                this.finish();
                 break;
             case R.id.btn_login:
                 //登录
-                String mailStr = et_mail.getText().toString();
-                String pwdStr = et_pwd.getText().toString();
+                final String mailStr = et_mail.getText().toString();
+                final String pwdStr = et_pwd.getText().toString();
                 final JSONObject jsonObject = new JSONObject();
 
                 if( TextUtils.isEmpty(mailStr)|| TextUtils.isEmpty(pwdStr)){
@@ -83,6 +84,8 @@ public class MailLoginActivity extends BaseActivity {
                                     Intent intent = new Intent(MailLoginActivity.this, IndividualActivity.class);
 
                                     intent.putExtra("avatar",avatar);
+                                    intent.putExtra("username",mailStr);
+                                    intent.putExtra("password",pwdStr);
                                     startActivity(intent);
                                     MailLoginActivity.this.finish();
 
@@ -99,18 +102,15 @@ public class MailLoginActivity extends BaseActivity {
                 break;
             case R.id.tv_register:
                 //注册
+                startActivity(new Intent(this,RegisterActivity.class));
+                this.finish();
                 break;
             case R.id.tv_forgetpwd:
                 //忘记密码
+                startActivity(new Intent(this,ForgetPwdActivity.class));
+                this.finish();
                 break;
         }
     }
-    //判断email格式是否正确
-    public boolean isEmail(String email) {
-        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
-        Pattern p = Pattern.compile(str);
-        Matcher m = p.matcher(email);
 
-        return m.matches();
-    }
 }

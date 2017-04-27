@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,8 +30,9 @@ public class MainActivity extends BaseActivity{
     public ImageView iv_individual;
     @Bind(R.id.tv_main_title)
     public TextView tv_main_title;
-    public static Boolean flag = false;
+
     public static ImageView iv_ms_album;
+    public static AnimationDrawable animDrawable;
     //当前fragment
     public Fragment mContent = new Fragment();
     //四个Fragment
@@ -46,6 +48,8 @@ public class MainActivity extends BaseActivity{
     @Override
     protected void init() {
         rg_home.getChildAt(0).performClick();
+        iv_ms_album = (ImageView) findViewById(R.id.iv_ms_album);
+         animDrawable = (AnimationDrawable) iv_ms_album.getDrawable();
     }
     @OnClick({R.id.rb_home,R.id.rb_reading,R.id.rb_music,R.id.rb_movie,R.id.iv_individual})
     public void onClickListener(View view){
@@ -101,19 +105,38 @@ public class MainActivity extends BaseActivity{
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean isShow = intent.getBooleanExtra("show",false);
-            flag = isShow;
+
             if (isShow){
                 MainActivity.getContext().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         iv_ms_album.setBackgroundResource(R.drawable.animation_play);
-                        AnimationDrawable animDrawable = (AnimationDrawable) iv_ms_album.getDrawable();
-
                         iv_ms_album.setVisibility(View.VISIBLE);
                         animDrawable.start();
+
+                    }
+                });
+            }
+            else {
+                MainActivity.getContext().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        animDrawable.stop();
+                        iv_ms_album.setVisibility(View.GONE);
+
                     }
                 });
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            System.exit(0);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

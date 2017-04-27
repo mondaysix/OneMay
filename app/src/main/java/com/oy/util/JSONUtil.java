@@ -30,6 +30,20 @@ import java.util.List;
  * Created by Lucky on 2016/10/30.
  */
 public class JSONUtil {
+    //---------用户注册验证码解析
+    public static String getRegisterCode(String json){
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            String status = jsonObject.getString("status");
+            if(status.equals("200")){
+                return jsonObject.getString("code");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
     //首页page个数
     public static List<Integer> getHomePageNum(String json){
         try {
@@ -128,39 +142,47 @@ public class JSONUtil {
         MusicContent musicContent = new MusicContent();
         try {
             JSONObject jsonObject = new JSONObject(json).getJSONObject("data");
-            musicContent.setId(jsonObject.getString("id"));
+            //作者
+            MusicContent.AuthorBean authorBean = new MusicContent.AuthorBean();
+            JSONObject jsonObject1 = jsonObject.getJSONObject("author");
+            authorBean.setUser_id(jsonObject1.getInt("user_id"));
+            authorBean.setUser_name(jsonObject1.getString("user_name"));
+            authorBean.setDesc(jsonObject1.getString("desc"));
+            authorBean.setWeb_url(jsonObject1.getString("web_url"));
+            musicContent.setAuthor(authorBean);
+            musicContent.setId(jsonObject.getInt("id"));
             musicContent.setTitle(jsonObject.getString("title"));
             musicContent.setCover(jsonObject.getString("cover"));
             musicContent.setStory_title(jsonObject.getString("story_title"));
             musicContent.setStory(jsonObject.getString("story"));
             musicContent.setLyric(jsonObject.getString("lyric"));
             musicContent.setInfo(jsonObject.getString("info"));
-            musicContent.setMusic_id(jsonObject.getString("music_id"));
-            musicContent.setCharge_edt(jsonObject.getString("charge_edt"));
-            musicContent.setPraisenum(jsonObject.getString("praisenum"));
-            musicContent.setRead_num(jsonObject.getString("read_num"));
-            musicContent.setSharenum(jsonObject.getString("sharenum"));
-            musicContent.setCommentnum(jsonObject.getString("commentnum"));
+            musicContent.setMucic_id(jsonObject.getString("music_id"));
+
+           // Log.d("msg", "getMusicCon: "+jsonObject.getString("music_id"));
+            musicContent.setCharge_edit(jsonObject.getString("charge_edit"));
+            musicContent.setPraisenum(jsonObject.getInt("praisenum"));
+            musicContent.setSharenum(jsonObject.getInt("sharenum"));
+            musicContent.setCommentnum(jsonObject.getInt("commentnum"));
             musicContent.setMaketime(jsonObject.getString("maketime"));
-            MusicContent.AuthorBean authorBean = new MusicContent.AuthorBean();
-            //作者
-            JSONObject jsonObject1 = jsonObject.getJSONObject("author");
-            authorBean.setUser_id(jsonObject1.getString("user_id"));
-            authorBean.setUser_name(jsonObject1.getString("user_name"));
-            authorBean.setDesc(jsonObject1.getString("desc"));
-            authorBean.setWeb_url(jsonObject1.getString("web_url"));
-            musicContent.setAuthor(authorBean);
-            //story_author
-            MusicContent.StoryAuthorBean storyAuthorBean = new MusicContent.StoryAuthorBean() ;
-            JSONObject jsonObject2 = jsonObject.getJSONObject("story_author");
-            storyAuthorBean.setUser_id(jsonObject2.getString("user_id"));
-            storyAuthorBean.setUser_name(jsonObject2.getString("user_name"));
-            musicContent.setStory_author(storyAuthorBean);
+            musicContent.setUser_name(jsonObject.getString("user_name"));
+            Log.d("msg", "getMusicCon: "+musicContent.getMucic_id());
             return musicContent;
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return null;
+    }
+    static String escapeExprSpecialWord(String keyword) {
+
+        String[] fbsArr = { "\\", "$", "(", ")", "*", "+", ".", "[", "]", "?", "^", "{", "}", "|" };
+        for (String key : fbsArr) {
+            if (keyword.contains(key)) {
+                keyword = keyword.replace(key, "\\" + key);
+            }
+        }
+
+        return keyword;
     }
     //音乐页----评论区
     public static List<MusicComment> getComments(String json){

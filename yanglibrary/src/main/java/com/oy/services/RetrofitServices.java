@@ -25,4 +25,8 @@ public interface RetrofitServices {
     Call<ResponseBody> createUser(@Body JSONObject jsonObject);
     @POST(InstanceUtil.user_login)
     Call<ResponseBody> userLogin(@Body JSONObject jsonObject);
+    @POST(InstanceUtil.hplauds_update)
+    Call<ResponseBody> hpLauds(@Body JSONObject jsonObject);
+
+
 }

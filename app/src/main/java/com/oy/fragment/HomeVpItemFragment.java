@@ -1,5 +1,6 @@
 package com.oy.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -9,15 +10,20 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.oy.activity.R;
+import com.oy.activity.ShareActivity;
 import com.oy.entity.ContentEntity;
 import com.oy.util.Constants;
 import com.oy.util.JSONUtil;
 import com.oy.util.LruCacheUtil;
 import com.oy.util.RetrofitUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
 
@@ -40,6 +46,14 @@ public class HomeVpItemFragment extends BaseFragment {
     public TextView tv_hp_maketime;
     @Bind(R.id.tv_hp_praisenum)
     public TextView tv_hp_praisenum;
+    @Bind(R.id.iv_share)
+    public ImageView iv_share;//分享
+    //点赞相关
+    @Bind(R.id.iv_laud)
+    public ImageView iv_laud;//点赞
+    public boolean isLaud = false;
+    public int praiseNum;
+    public int content_id;
     //屏幕宽高
     public int widthScreen,heightScreen;
     //设置缩放的属性
@@ -63,9 +77,11 @@ public class HomeVpItemFragment extends BaseFragment {
             public void getJson(String json) {
                 Log.d("msg1", json);
                 if (json!=null){
-                    ContentEntity contentEntity = JSONUtil.getContent(json);
+                    final ContentEntity contentEntity = JSONUtil.getContent(json);
+                    //id
+                    content_id = contentEntity.getHpcontent_id();
                     //文章图片
-                    String img_url = Constants.IMG_URL+contentEntity.getHp_img_url();
+                    final String img_url = Constants.IMG_URL+contentEntity.getHp_img_url();
                     Glide.with(getActivity()).load(img_url)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.default_hp_image)
@@ -77,11 +93,23 @@ public class HomeVpItemFragment extends BaseFragment {
                     //内容
                     tv_hp_content.setText(contentEntity.getHp_content());
                     //创作时间
-
-
                     tv_hp_maketime.setText(contentEntity.getHp_maketime());
                     //点赞数
-                    tv_hp_praisenum.setText(contentEntity.getPraisenum()+"");
+                    praiseNum = contentEntity.getPraisenum();
+                    tv_hp_praisenum.setText(praiseNum+"");
+                    //分享方式
+                    iv_share.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //跳转到分享页面
+                            Intent intent = new Intent(BaseFragment.context, ShareActivity.class);
+                            intent.putExtra("title",contentEntity.getHp_author());
+                            intent.putExtra("img",img_url);
+                            intent.putExtra("content",contentEntity.getHp_content());
+                            startActivity(intent);
+
+                        }
+                    });
 
                 }
             }
@@ -112,11 +140,39 @@ public class HomeVpItemFragment extends BaseFragment {
     public void setListener() {
     }
 
-    @OnClick(R.id.iv_hp_image)
+    @OnClick({R.id.iv_hp_image,R.id.iv_laud})
     public void onClickListener(View view){
         switch (view.getId()){
             case R.id.iv_hp_image:
                 iv_hp_image.startAnimation(scaleAnimation);
+                break;
+            case R.id.iv_laud:
+                if(!isLaud){
+                    praiseNum++;
+                    isLaud = true;
+                    Toast.makeText(HomeVpItemFragment.context,"再按一下可取消点赞",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    praiseNum--;
+                    isLaud = false;
+                }
+                tv_hp_praisenum.setText(""+praiseNum);
+                //更新至数据库
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("content_id",content_id);
+                    jsonObject.put("praise_num",praiseNum);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                new RetrofitUtil().init(Constants.DOM_URL).setListener(new RetrofitUtil.OnGetJsonListener() {
+                    @Override
+                    public void getJson(String json) {
+                        Log.d("msg", "update---laud--"+json);
+                    }
+                }).downData(null,jsonObject,4);
+
                 break;
         }
     }

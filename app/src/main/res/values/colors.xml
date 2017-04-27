@@ -17,4 +17,6 @@
     <color name="bg_purple">#673AB7</color>
     <color name="bg_white">#ffffff</color>
     <color name="bg_yellow">#FFC107</color>
+    <color name="app_blue">#1C86EE</color>
+
 </resources>

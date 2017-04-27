@@ -1,5 +1,6 @@
 package com.oy.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import de.greenrobot.event.ThreadMode;
  * Created by Administrator on 2016/9/26 0026.
  */
 public abstract class BaseFragment<T> extends Fragment {
+    public static Context context;
     T data;
     @Nullable
     @Override
@@ -24,6 +26,8 @@ public abstract class BaseFragment<T> extends Fragment {
         //1---EventBus注册
 //        EventBus.getDefault().register(this);
         View view = inflater.inflate(getLayoutId(),container,false);
+        context = view.getContext();
+
         return view;
     }
     public abstract int getLayoutId();

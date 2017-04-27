@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oy.activity">
-    <!--访问网络权限-->
+    <!--权限-->
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"/>
     <!--屏幕适配-->
     <supports-screens android:anyDensity="true"/>
     <application
@@ -11,6 +17,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:name=".ApplicationContext"
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <!--欢迎页面-->
         <activity android:name=".WelcomeActivity"
@@ -36,17 +43,22 @@
         <!--阅读头部详情页面-->
         <activity android:name=".ReadHActivity"/>
         <!--电影详情页面-->
-        <activity android:name=".MovieActivity"/>
+        <activity android:name=".MovieActivity"
+            android:process=":vitamio"/>
         <!--视频播放页面-->
         <activity android:name=".VideoActivity"
+            android:process=":vitamio"
             android:screenOrientation="landscape"
             android:configChanges="keyboard|screenSize|orientation"></activity>
+
         <!--天气预报 城市选择页面-->
         <activity android:name=".CityChooseActivity"/>
         <!--一周天气列表-->
         <activity android:name=".WeatherActivity"/>
         <!--其他设置页面-->
         <activity android:name=".SettingActivity"/>
+        <!--分享方式页面-->
+        <activity android:name=".ShareActivity"/>
         <!--qq登录验证-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -58,13 +70,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="1104732758" />
+                <data android:scheme="tencent1106106814" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".ForgetPwdActivity"/>
     </application>
 
 </manifest>

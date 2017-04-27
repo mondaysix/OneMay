@@ -30,6 +30,14 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
         <ImageView
+            android:id="@+id/iv_qq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/select_login_qq"
+            android:layout_marginBottom="10dp"/>
+        <ImageView
+            android:id="@+id/iv_wx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/select_login_wx"
@@ -37,17 +45,13 @@
             android:clickable="true"
             android:layout_marginBottom="10dp"/>
         <ImageView
+            android:id="@+id/iv_weibo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:src="@drawable/select_login_weibo"
             android:layout_marginBottom="10dp"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:src="@drawable/select_login_qq"
-            android:layout_marginBottom="10dp"/>
+
 
     </LinearLayout>
 

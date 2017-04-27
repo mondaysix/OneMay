@@ -51,6 +51,9 @@ public class RetrofitUtil {
         }else if(id == 3){
             //用户登录传递json数据
             call = retrofitServices.userLogin(jsonObject);
+        }else if(id == 4){
+            //更新首页点赞数
+            call = retrofitServices.hpLauds(jsonObject);
         }
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -59,7 +62,7 @@ public class RetrofitUtil {
                 try {
 
                         result[0] = response.body().string();
-                        Log.d("msg1", "onResponse: "+result[0]);
+                       // Log.d("msg1", "onResponse: "+result[0]);
                         listener.getJson(result[0]);
 
 
