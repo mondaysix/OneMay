@@ -37,7 +37,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
-        android:hint="输入用户名"
+        android:hint="输入用户邮箱号"
         android:padding="10dp"
         android:textColorHint="#000"
         android:textColor="#000"
@@ -59,7 +59,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
         <EditText
             android:id="@+id/et_npwd"
             android:layout_width="match_parent"
@@ -84,6 +85,17 @@
             android:textColorHint="#000"
             android:textColor="#000"
             android:background="@drawable/login_edit_bg"/>
+        <Button
+            android:id="@+id/btn_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="#CFCFCF"
+            android:text="重设密码"
+            android:textSize="14sp"
+            android:textColor="#000"/>
     </LinearLayout>
 
 </LinearLayout>

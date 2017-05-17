@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.oy.database.CommonDB;
 import com.oy.database.MySqliteOpenHelper;
@@ -63,6 +64,17 @@ public class UserInfoDB {
         result = sb.insert(sqlite_table,null,contentValues);
         return result;
     }
+    //update data
+    public boolean updateUser(String avatarStr){
+        if (!"".equals(avatarStr)){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(avatar,avatarStr);
+            sb.update(sqlite_table,contentValues,null,null);
+            return true;
+        }
+        return false;
+
+    }
     //查询本地是否有该数据
     public UserEntity queryEntity(String user){
         UserEntity userEntity = new UserEntity();
@@ -78,7 +90,28 @@ public class UserInfoDB {
             cursor.close();
         }
         return userEntity;
+    }
+    //删除本地数据库中的该数据
+    public boolean deleteUser(String user){
+        if(user!=null){
+            sb.delete(sqlite_table,"alias=?",new String[]{user});
+            return true;
+        }
+        return false;
 
+    }
+    //查询数据库用户
+    public String queryUser(){
+        Cursor cs = null;
+        cs = sb.query(sqlite_table,new String[]{avatar},null,null,null,null,null);
+        while (cs.moveToNext()){
+            String s = cs.getString(cs.getColumnIndex("avatar"));
+            if(cs!=null){
+                cs.close();
+            }
+          return s;
+        }
+        return null;
     }
 
 }

@@ -5,8 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/app_color">
     <ImageView
+        android:id="@+id/iv_wel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/opening_page" />
+        android:src="@drawable/opening_monday" />
 
 </LinearLayout>

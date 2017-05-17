@@ -3,27 +3,59 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="40dp">
+    android:background="#FCFCFC">
         <TextView
             android:id="@+id/tv_bluth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="附近的人一键搜索"
             android:textColor="#aeacac"
-            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
             android:textSize="20sp"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginBottom="20dp"
             android:background="#a6a8ab"/>
+        <RelativeLayout
+            android:id="@+id/rl_notify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/tv_notify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推送通知"
+                android:textColor="#aeacac"
+                android:layout_marginLeft="15dp"
+                android:gravity="center"
+                android:textSize="20sp"/>
+            <ImageView
+                android:id="@+id/iv_nofity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_normal"
+               android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@+id/tv_notify"
+                android:layout_marginTop="5dp"
+                android:background="#a6a8ab"/>
+        </RelativeLayout>
+
     <TextView
         android:id="@+id/tv_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="检查更新"
         android:textColor="#aeacac"
-        android:gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
         android:textSize="20sp"/>
     <View
         android:layout_width="match_parent"
@@ -34,14 +66,16 @@
         android:id="@+id/tv_changeuser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="编辑当前基本账号信息"
         android:textColor="#aeacac"
-        android:gravity="center"
+        android:layout_marginLeft="15dp"
         android:textSize="20sp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginBottom="20dp"
+        android:visibility="gone"
         android:background="#a6a8ab"/>
     <TextView
         android:id="@+id/tv_logout"
@@ -49,13 +83,14 @@
         android:layout_height="wrap_content"
         android:text="注销当前账号"
         android:textColor="#aeacac"
-        android:gravity="center"
+        android:layout_marginLeft="15dp"
         android:textSize="20sp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginBottom="20dp"
         android:background="#a6a8ab"/>
+
 
 
 </LinearLayout>

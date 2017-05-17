@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.oy.activity.HomeEditActivity;
 import com.oy.activity.R;
 import com.oy.activity.ShareActivity;
 import com.oy.entity.ContentEntity;
@@ -48,9 +49,6 @@ public class HomeVpItemFragment extends BaseFragment {
     public TextView tv_hp_praisenum;
     @Bind(R.id.iv_share)
     public ImageView iv_share;//分享
-    //点赞相关
-    @Bind(R.id.iv_laud)
-    public ImageView iv_laud;//点赞
     public boolean isLaud = false;
     public int praiseNum;
     public int content_id;
@@ -61,6 +59,8 @@ public class HomeVpItemFragment extends BaseFragment {
     public int toX=2,toY=2;
     public int pivotX,povitY;
     public ScaleAnimation scaleAnimation;
+    //content
+    public String content;
     @Override
     public int getLayoutId() {
         return R.layout.home_vp_item;
@@ -92,6 +92,7 @@ public class HomeVpItemFragment extends BaseFragment {
                     tv_hp_author.setText(contentEntity.getHp_author());
                     //内容
                     tv_hp_content.setText(contentEntity.getHp_content());
+                    content = contentEntity.getHp_content();
                     //创作时间
                     tv_hp_maketime.setText(contentEntity.getHp_maketime());
                     //点赞数
@@ -140,7 +141,7 @@ public class HomeVpItemFragment extends BaseFragment {
     public void setListener() {
     }
 
-    @OnClick({R.id.iv_hp_image,R.id.iv_laud})
+    @OnClick({R.id.iv_hp_image,R.id.iv_laud,R.id.ll_edit})
     public void onClickListener(View view){
         switch (view.getId()){
             case R.id.iv_hp_image:
@@ -172,6 +173,16 @@ public class HomeVpItemFragment extends BaseFragment {
                         Log.d("msg", "update---laud--"+json);
                     }
                 }).downData(null,jsonObject,4);
+
+                break;
+            case R.id.ll_edit:
+                //进入页面编辑页
+                Intent intent = new Intent(HomeVpItemFragment.context, HomeEditActivity.class);
+                if(content!=null){
+                    intent.putExtra("content_id",content_id);
+                    intent.putExtra("word",content);
+                }
+                startActivity(intent);
 
                 break;
         }

@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.graphics.drawable.AnimationDrawable;
 
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -29,6 +30,7 @@ import com.oy.activity.R;
 import com.oy.adapter.MusicCRyAdapter;
 import com.oy.entity.MusicComment;
 import com.oy.entity.MusicContent;
+import com.oy.util.AudioPlayer;
 import com.oy.util.Constants;
 import com.oy.util.JSONUtil;
 import com.oy.util.RetrofitUtil;
@@ -108,7 +110,7 @@ public class MusicCFragment extends BaseFragment{
     public MainActivity.BroadLocalReceiver broadReceiver;
     public IntentFilter intentFilter;
     //播放音乐
-    public MediaPlayer mediaPlayer ;
+   public AudioPlayer player;
     public boolean isPause  = false;
     @Bind(R.id.iv_ms_play)
     public ImageView iv_ms_play;
@@ -136,15 +138,12 @@ public class MusicCFragment extends BaseFragment{
         cRyAdapter = new MusicCRyAdapter(getActivity());
         rv_ms_comment.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_ms_comment.setAdapter(cRyAdapter);
-        mediaPlayer = new MediaPlayer();
+        player = new AudioPlayer();
+//        mediaPlayer = new MediaPlayer();
         //mediaPlayer = MediaPlayer.create(getActivity(),R.raw.music1);
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                Toast.makeText(MusicCFragment.context,"播放完成",Toast.LENGTH_SHORT).show();
-            }
-        });
+
     }
+    String song_url;
     @Override
     protected void getBundletDatas(Bundle bundle) {
         final int music_id = bundle.getInt("m_id");
@@ -158,20 +157,9 @@ public class MusicCFragment extends BaseFragment{
                     MusicContent musicCon = new MusicContent();
                     musicCon = JSONUtil.getMusicCon(json);
                     //歌曲id
-                    String song_url = musicCon.getMucic_id();
-                    try {
-                        mediaPlayer.setDataSource(Constants.SONG_URL+song_url);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mediaPlayer.prepareAsync();
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                     song_url = Constants.SONG_URL + musicCon.getMucic_id();
 
-                    Log.d("msg", "getJson: "+Constants.SONG_URL+song_url);
+                    Log.d("msg", "getJson: "+song_url);
                     if(musicCon.getCover()!=null){
                         String cover_url = Constants.IMG_URL +musicCon.getCover();
                         //封面
@@ -276,15 +264,18 @@ public class MusicCFragment extends BaseFragment{
                 Intent intent = new Intent("com.action.play.album");
 
 
-                if (isPause && mediaPlayer.isPlaying()){
+                if (isPause && player.isPlaying()){
 
                     iv_ms_play.setImageResource(R.drawable.play);
-                    mediaPlayer.pause();
+                    player.pause();
                     isPause = false;
                 }
                 else {
+                    Log.d("msg", "onItemClick: "+song_url);
+                    if(song_url!=null){
+                        player.playURL(song_url);
+                    }
 
-                    mediaPlayer.start();
                     iv_ms_play.setImageResource(R.drawable.player_pause);
                     isPause = true;
 
@@ -299,12 +290,9 @@ public class MusicCFragment extends BaseFragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer!=null){
-            mediaPlayer.release();
-            mediaPlayer = null;
+        if (player!=null){
+           player.stop();
         }
         localBroadManager.unregisterReceiver(broadReceiver);
     }
-
-
 }

@@ -19,6 +19,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -63,21 +64,6 @@ public class MovieActivity extends BaseActivity {
     public TextView tv_mv_st;
     //电影表
     public MovieTab movieTab;
-    //影片关键字
-    @Bind(R.id.iv_mv_keyword)
-    public ImageView iv_mv_keyword;
-    @Bind(R.id.ll_keyword)
-    public LinearLayout ll_keyword;
-    @Bind(R.id.tv_mv_keyword1)
-    public TextView tv_mv_keyword1;
-    @Bind(R.id.tv_mv_keyword2)
-    public TextView tv_mv_keyword2;
-    @Bind(R.id.tv_mv_keyword3)
-    public TextView tv_mv_keyword3;
-    @Bind(R.id.tv_mv_keyword4)
-    public TextView tv_mv_keyword4;
-    @Bind(R.id.tv_mv_keyword5)
-    public TextView tv_mv_keyword5;
     //影片剧照
     @Bind(R.id.iv_mv_photo)
     public ImageView iv_mv_photo;
@@ -111,7 +97,7 @@ public class MovieActivity extends BaseActivity {
         movie_id = Integer.valueOf(movieList.getId());
         tv_mv_title.setText(movieList.getTitle());
 
-        tv_mv_score.setText(movieList.getScore());
+        tv_mv_score.setText(movieList.getTitle());
         Typeface typeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/textstyle.ttf");
         tv_mv_score.setTypeface(typeface);
         //评论区recycleview
@@ -159,14 +145,6 @@ public class MovieActivity extends BaseActivity {
                         .load(movieTab.getDetailcover())
                         .placeholder(R.drawable.movie_placeholder_3)
                         .into(iv_mv_cover);
-                //设置五个关键字
-                String keywords =  movieTab.getKeywords();
-                String[] strings = keywords.split(";");
-                tv_mv_keyword1.setText(strings[0]);
-                tv_mv_keyword2.setText(strings[1]);
-                tv_mv_keyword3.setText(strings[2]);
-                tv_mv_keyword4.setText(strings[3]);
-                tv_mv_keyword5.setText(strings[4]);
                 //设置横向scrollview---影片剧照
                 for (int i = 0;i<movieTab.getPhoto().size();i++){
                     String photo_url = movieTab.getPhoto().get(i);
@@ -206,44 +184,52 @@ public class MovieActivity extends BaseActivity {
                 tv_mv_tab.setText(MovieActivity.getContext().getResources().getString(R.string.movie_tab));
                 hsv_mv.setVisibility(View.GONE);
                 tv_mc_info.setVisibility(View.GONE);
-                iv_mv_keyword.setImageResource(R.drawable.gross_selected);
-                ll_keyword.setVisibility(View.VISIBLE);
+
                 iv_mv_photo.setImageResource(R.drawable.still_default);
                 iv_mv_info.setImageResource(R.drawable.plot_default);
                 break;
             case R.id.iv_mv_photo:
                 //影片剧照
                 tv_mv_tab.setText(MovieActivity.getContext().getResources().getString(R.string.movie_photo));
-                ll_keyword.setVisibility(View.GONE);
+                //ll_keyword.setVisibility(View.GONE);
                 tv_mc_info.setVisibility(View.GONE);
-                iv_mv_keyword.setImageResource(R.drawable.gross_default);
+                //iv_mv_keyword.setImageResource(R.drawable.gross_default);
                 iv_mv_photo.setImageResource(R.drawable.still_selected);
                 hsv_mv.setVisibility(View.VISIBLE);
                 iv_mv_info.setImageResource(R.drawable.plot_default);
                 break;
             case R.id.iv_mv_info:
                 tv_mv_tab.setText(MovieActivity.getContext().getResources().getString(R.string.movie_info));
-                ll_keyword.setVisibility(View.GONE);
+                //ll_keyword.setVisibility(View.GONE);
                 hsv_mv.setVisibility(View.GONE);
-                iv_mv_keyword.setImageResource(R.drawable.gross_default);
+                //iv_mv_keyword.setImageResource(R.drawable.gross_default);
                 iv_mv_photo.setImageResource(R.drawable.still_default);
                 iv_mv_info.setImageResource(R.drawable.plot_selected);
                 tv_mc_info.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_mv_cover:
-                //对话框---提示
-                final CustomDialog customDialog = new CustomDialog(this, new CustomDialog.OnClickListener() {
-                    @Override
-                    public void onComfirm(View view) {
-                        Intent intent = new Intent(MovieActivity.getContext(),VideoActivity.class);
-                        intent.putExtra("video",movieTab.getVideo());
-                        intent.putExtra("title",movieTab.getTitle());
-                        startActivity(intent);
-                    }
-                });
-                //取消标题栏
-                customDialog.show();
-//
+                if("".equals(movieTab.getVideo())){
+                    Toast.makeText(this,"暂时没有可看资源，谢谢合作",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    //对话框---提示
+                    final CustomDialog customDialog = new CustomDialog(this, new CustomDialog.OnClickListener() {
+                        @Override
+                        public void onComfirm(View view) {
+                            Intent intent = new Intent(MovieActivity.getContext(),VideoActivity.class);
+                            Log.d("msg5", "onComfirm: "+movieTab.getVideo());
+                            if(!"".equals(movieTab.getVideo())){
+                                intent.putExtra("video",movieTab.getVideo());
+                                intent.putExtra("title",movieTab.getTitle());
+                                startActivity(intent);
+                                MovieActivity.this.finish();
+                            }
+                        }
+                    });
+                    //取消标题栏
+                    customDialog.show();
+
+                }
                 break;
 
         }

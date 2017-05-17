@@ -53,7 +53,11 @@ public class RetrofitUtil {
             call = retrofitServices.userLogin(jsonObject);
         }else if(id == 4){
             //更新首页点赞数
+            Log.d("msg1", "downData: "+jsonObject);
             call = retrofitServices.hpLauds(jsonObject);
+        }else if(id == 5){
+            //更新文章内容
+            call = retrofitServices.hpContents(jsonObject);
         }
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -62,7 +66,6 @@ public class RetrofitUtil {
                 try {
 
                         result[0] = response.body().string();
-                       // Log.d("msg1", "onResponse: "+result[0]);
                         listener.getJson(result[0]);
 
 

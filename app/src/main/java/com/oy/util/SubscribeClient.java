@@ -2,6 +2,8 @@ package com.oy.util;
 
 
 
+import android.util.Log;
+
 import com.ibm.mqtt.MqttClient;
 import com.ibm.mqtt.MqttException;
 
@@ -11,22 +13,38 @@ import com.ibm.mqtt.MqttException;
  */
 
 public class SubscribeClient {
-    public   String CONNECTION_STRING = "tcp://10.0.0.40:1884";
+    public String CONNECTION_STRING = "tcp://192.168.6.105:1884";
     private final static boolean CLEAN_START = true;
     private final static short KEEP_ALIVE = 10;//低耗网络，但是又需要及时获取数据，心跳30s
     private final static String CLIENT_ID = "client";
 
     private MqttClient mqttClient = null;
 
-    public SubscribeClient(String i,String picstr,String bs){
+        public SubscribeClient(String i){
+        //connect servers
         try {
-            //connect servers
             mqttClient = new MqttClient(CONNECTION_STRING);
             mqttClient.connect(CLIENT_ID+i, CLEAN_START, KEEP_ALIVE);
             SimpleCallbackHandler simpleCallbackHandler = new SimpleCallbackHandler();
             mqttClient.registerSimpleHandler(simpleCallbackHandler);//注册接收消息方法
-          //  mqttClient.subscribe(Contants.TOPICS, Contants.QOS_VALUES);//订阅接主题
-           // mqttClient.subscribe(,QOS_VALUES);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void upAvatar (String picstr, String bs) {
+        //connect servers
+//        try {
+//            mqttClient = new MqttClient(CONNECTION_STRING);
+//            mqttClient.connect(CLIENT_ID + i, CLEAN_START, KEEP_ALIVE);
+//            SimpleCallbackHandler simpleCallbackHandler = new SimpleCallbackHandler();
+//            mqttClient.registerSimpleHandler(simpleCallbackHandler);//注册接收消息方法
+//        } catch (MqttException e) {
+//            e.printStackTrace();
+//        }
+        try {
+
+            mqttClient.subscribe(Constants.TOPICS, Constants.QOS_VALUES);//订阅接主题
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,10 +54,12 @@ public class SubscribeClient {
          */
 
         try {
-            if (!picstr.equals("")){
+            if (!picstr.equals("")) {
+                Log.d("msg", "upAvatar: " + picstr);
                 mqttClient.publish("publishmsg", picstr.getBytes(), Constants.QOS_VALUES[0], true);
-                mqttClient.publish("publishmsg2",bs.getBytes(),Constants.QOS_VALUES[0], true);
-             //  mqttClient.publish("user/getPic","test".getBytes(),Contants.QOS_VALUES[0],true);
+                mqttClient.publish("publishmsg2", bs.getBytes(), Constants.QOS_VALUES[0], true);
+
+                //  mqttClient.publish("user/getPic","test".getBytes(),Contants.QOS_VALUES[0],true);
             }
 
 
@@ -47,6 +67,8 @@ public class SubscribeClient {
             e.printStackTrace();
         }
     }
+
+
     public MqttClient getMqttClient(){
         if(mqttClient!=null){
             return mqttClient;

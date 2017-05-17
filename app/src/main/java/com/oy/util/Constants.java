@@ -11,25 +11,26 @@ public interface Constants {
     //new url
     String DOM_URL = "http://192.168.1.115:1883/";
     //192.168.43.172----mm
-    //192.168.6.106-----xiaomm
-    //192.168.1.104----wzry 105
+    //192.168.6.106-----xiaomm 109
+    //192.168.1.104----wzry 105 103
     //192.168.1.113----smanos_cc 115
     //读取本地相册照片
     String TYPE = "image/*";
-    int REQUESTCODE = 111;
+    int REQUESTCODE = 100;
+    int REQUESTCODE2 = 101;
     //qq登录appid
     String APPID = "1106106814";
     //img url
     String IMG_URL = DOM_URL+"uploads/";
     //song url
     String SONG_URL = DOM_URL + "musics/";
+    //get version
+    String VERSION_URL = "app/version/";
     //-----------------首页
     //首页id
      String HOME_URL="hp/idlist/0?version=3.5.0&platform=android";
     //根据id获得内容区
     String HOME_CONTENT_URL="hp/detail/%d?version=3.5.0&platform=android";
-    //首页点赞数更新
-    String LAUD_UPDATE = "hp/lauds/";
     //------------------阅读页
     //---头部viewpager
     String READ_HEAD2="reading/head/?version=3.5.0&platform=android";
@@ -47,10 +48,10 @@ public interface Constants {
     //------------------电影页
     //电影列表显示
     String MOVIE_HOME="movie/list/0?version=3.5.0&platform=android";
+    //
+    String MOVIE_TABLE="movie/detail/%d?version=3.5.0&platform=android";
     //电影简单介绍
     String MOVIE_DETAIL="movie/%d/story/1/0?version=3.5.0&platform=android";
-    //电影表
-    String MOVIE_TABLE="movie/detail/%d?version=3.5.0&platform=android";
     //评论详情
     String MOVIE_COMMENT="comment/praiseandtime/movie/%d/0?version=3.5.0&platform=android";
     //------全国一周内天气----
@@ -62,11 +63,16 @@ public interface Constants {
     //------------登录注册---
     String USER_CODE = "user/regcode/";
     String REGISTER = "user/register/";
+    String VERIFY_MAIL = "user/verifymail/";
+    String NEW_PWD = "user/newpwd/";
     int[] QOS_VALUES = {0,1};
     String[] TOPICS = {
             "user/getPic",
-            "userpic"
+            "avatareturn"
     };
+    //消息通知----
+    String PUSH_MSG = "msg/push/";
+    String PUSH_IMG = DOM_URL +"pushIcon/";
 
 
 }

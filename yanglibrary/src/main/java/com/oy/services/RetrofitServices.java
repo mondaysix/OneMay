@@ -28,5 +28,7 @@ public interface RetrofitServices {
     @POST(InstanceUtil.hplauds_update)
     Call<ResponseBody> hpLauds(@Body JSONObject jsonObject);
 
+    @POST(InstanceUtil.hpcontents_update)
+    Call<ResponseBody> hpContents(@Body JSONObject jsonObject);
 
 }

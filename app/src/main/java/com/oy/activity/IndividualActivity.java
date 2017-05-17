@@ -28,7 +28,7 @@ public class IndividualActivity extends BaseActivity {
     public ImageView iv_header;
     @Bind(R.id.tv_alias)
     public TextView tv_alias;
-    public UserInfoDB userInfoDB;
+    public static UserInfoDB userInfoDB;
     public static  String uname="";
     String img_url = Constants.IMG_URL;
     @Override
@@ -88,7 +88,7 @@ public class IndividualActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_individual_back,R.id.ll_weather_setting,R.id.other_setting,R.id.iv_header})
+    @OnClick({R.id.iv_individual_back,R.id.ll_weather_setting,R.id.other_setting,R.id.iv_header,R.id.tv_up})
     public void onClickListener(View view){
         switch (view.getId()){
             case R.id.iv_individual_back:
@@ -110,6 +110,13 @@ public class IndividualActivity extends BaseActivity {
                 //登录方式
                 startActivityForResult(new Intent(this,loginWayActivity.class),111);
                 IndividualActivity.this.finish();
+                break;
+            case R.id.tv_up:
+                //上传用户新头像
+                Intent intent2 = new Intent(this,UpAvatarActivity.class);
+                intent2.putExtra("uname",uname);
+                startActivity(intent2);
+                this.finish();
                 break;
         }
     }

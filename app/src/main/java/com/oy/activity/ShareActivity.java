@@ -17,8 +17,8 @@ import org.json.JSONObject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-
 import static com.oy.activity.ApplicationContext.tencent;
+
 
 /**
  * Created by Meyki on 2017/4/21.

@@ -52,15 +52,11 @@ public class MovieRyAdapter extends RecyclerView.Adapter<MyCustomRecyclerViewHol
     @Override
     public void onBindViewHolder(MyCustomRecyclerViewHolder holder, int position) {
        ImageView iv_mv_cover = (ImageView) holder.getView(R.id.iv_mv_cover);
-        Glide.with(context)
-                .load(movieLists.get(position).getCover())
-                .placeholder(R.drawable.movie_placeholder_3)
-                .into(iv_mv_cover);
         iv_mv_cover.setTag(R.id.movie_tag,movieLists.get(position).getId());
         iv_mv_cover.setTag(R.id.movie_obj,movieLists.get(position));
         iv_mv_cover.setOnClickListener(this);
-        TextView tv_mv_score = (TextView) holder.getView(R.id.tv_mv_score);
-        tv_mv_score.setText(movieLists.get(position).getScore());
+        TextView tv_mv_score = (TextView) holder.getView(R.id.tv_mv);
+        tv_mv_score.setText(movieLists.get(position).getTitle());
         Typeface typeface = Typeface.createFromAsset(context.getResources().getAssets(), "fonts/textstyle.ttf");
         tv_mv_score.setTypeface(typeface);
     }

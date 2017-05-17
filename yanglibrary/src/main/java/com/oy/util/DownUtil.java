@@ -4,10 +4,6 @@ import android.os.Handler;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-/**
- * Created by Ken on 2016/9/9.17:09
- */
 public class DownUtil {
 
     /*

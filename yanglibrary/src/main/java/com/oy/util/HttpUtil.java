@@ -6,9 +6,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Ken on 2016/9/19.14:35
- */
 public class HttpUtil {
 
     /**

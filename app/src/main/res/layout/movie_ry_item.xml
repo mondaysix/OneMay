@@ -10,7 +10,7 @@
         android:src="@drawable/movie_placeholder_3"
         android:layout_marginBottom="12dp"/>
     <TextView
-        android:id="@+id/tv_mv_score"
+        android:id="@+id/tv_mv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="30dp"

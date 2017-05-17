@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -24,12 +25,14 @@ import com.oy.util.RetrofitUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import retrofit2.http.POST;
 
 /**
  * Created by Meyki on 2017/4/18.
@@ -44,16 +47,7 @@ public class RegisterActivity extends BaseActivity {
     public EditText et_registalias;
     @Bind(R.id.et_registpwd)
     public EditText et_registpwd;
-    @Bind(R.id.iv_avatar)
-    public ImageView iv_avatar;
-    @Bind(R.id.radioGroup)
-    public RadioGroup radioGroup;
-    @Bind(R.id.rb_album)
-    public RadioButton rb_album;
-    @Bind(R.id.rb_recode)
-    public RadioButton rb_recode;
     public String code;
-
     @Override
     protected int setContentId() {
         return R.layout.activity_register;
@@ -61,51 +55,9 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void onItemListener() {
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == rb_album.getId()){
-                    //读取手机本地相册
-                    Intent intent = new Intent();
-                    intent.setType(Constants.TYPE);
-                    intent.setAction(Intent.ACTION_PICK);
-                    startActivityForResult(intent,Constants.REQUESTCODE);
-                }
-                else if(checkedId == rb_recode.getId()){
-                    //拍照获取图片
 
-                }
-            }
-        });
     }
 
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        if(requestCode == Constants.REQUESTCODE){
-            if(intent == null){
-                return;
-            }
-            Uri uri = intent.getData();
-            Bitmap bitmap = null;
-            Log.d("msg", "------->"+intent.getData());
-            if(uri == null){
-                Bitmap bitmap1 = (Bitmap) intent.getExtras().get("data");
-                Log.d("msg", "startActivityForResult: "+bitmap1);
-            }
-            try {
-                bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(Uri.parse(uri.toString())));
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            if(bitmap!=null){
-                iv_avatar.setImageBitmap(bitmap);
-            }
-
-        }
-        super.startActivityForResult(intent, requestCode);
-    }
 
     @OnClick({R.id.iv_back,R.id.btn_register,R.id.btn_code})
     public void onClickListener(View view){
@@ -120,7 +72,7 @@ public class RegisterActivity extends BaseActivity {
                 String regcode = et_registcode.getText().toString();
                 String alias = et_registalias.getText().toString();
                 String pwd = et_registpwd.getText().toString();
-                String picname = "default.png";
+                String picname = "default.jpg";
                 if(isEmail(emails)){
                         Toast.makeText(this,"邮箱格式不正确",Toast.LENGTH_SHORT).show();
                 }
@@ -150,6 +102,9 @@ public class RegisterActivity extends BaseActivity {
                                 //注册成功跳转到登录界面
                                 startActivity(new Intent(RegisterActivity.this,MailLoginActivity.class));
                                 RegisterActivity.this.finish();
+                            }
+                            else {
+                                Toast.makeText(RegisterActivity.this,"注册失败,重新填写信息",Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
